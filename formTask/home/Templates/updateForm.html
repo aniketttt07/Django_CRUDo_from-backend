@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5 mb-5" >
+         <!-- Form to update employee profile data-->
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}             <!-- Include CSRF token for form submission -->
+            <h2>Update Employee Profile</h2>
+            <hr>
+            <div class="mb-3">
+                <label>Employee Name</label>
+                <input type="text" name='name' value="{{query.name}}" class="form-control" required>
+                <!-- Populate input field with existing employee details -->
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name='email' value="{{query.email}}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Mobile Number</label>
+                <input type="tel" name='mobile_number' value="{{query.mobile_number}}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Address</label>
+                <textarea name="address" class="form-control" required>{{query.address}}</textarea>
+            </div>
+            <div class="mb-4">
+                <label>Profile Image</label>
+                <input type="file" name='image' value="{{query.image}}" class="form-control" >
+            </div>
+            <button type="submit" class="btn btn-primary">Update Employee</button>
+            <!-- Submit button for updating the employee profile -->
+        </form>
+    </div>
+    
+{% endblock content %}

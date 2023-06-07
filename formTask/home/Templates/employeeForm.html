@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container mt-5 mb-5" >
+        <!-- Form to add employee profile -->
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}             <!-- Include CSRF token for form submission -->
+            <h2>Add Employee Profile</h2>
+            <hr>
+            <!-- Input fields for employee -->
+            <div class="mb-3">
+                <label>Employee Name</label>
+                <input type="text" name='name' class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name='email' class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Mobile Number</label>
+                <input type="tel" name='mobile_number' class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Address</label>
+                <textarea name="address" class="form-control" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label>Profile Image</label>
+                <input type="file" name='image' class="form-control" >
+            </div>
+            <button type="submit" class="btn btn-primary">Add Employee</button>
+            <!-- Submit button for adding the employee profile -->
+        </form>
+    </div>
+
+    <div class="p-5">
+
+        <!-- Search button -->
+
+        <nav class="navbar d-flex flex-row-reverse">
+            <form class=" form-inline" >
+              <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search by name">
+              <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </nav>
+
+        <!-- Table where data is represent -->
+        <table class="table table-bordered table">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Profile Image</th>
+                    <th>Name</th>
+                    <th>Email Address</th>
+                    <th>Mobile Number</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in data %}
+                <tr>
+                    <th width="50px">{{forloop.counter}}</th>
+                    <td>
+                        <!-- click to view full profile image -->
+                        <a href="/media/{{d.profile_image}}" target="_blank" title="View"><img src="/media/{{d.profile_image}}"  style="height: 100px; width: 120px;"></a>
+                        
+                    </td>
+                    <td>{{d.name | title }}</td>         <!-- Display the employee name in title case -->
+                    <td>{{d.email}}</td>
+                    <td>{{d.mobile_number}}</td>
+                    <td width="400px">{{d.address}}</td>
+                    <td>
+                        <!-- Buttons for deleting and updating the profile -->
+                        <a href="/delete/{{d.id}}" class="btn btn-danger btn-sm mt-2" title="Delete">Delete</a>
+                        <a href="/update/{{d.id}}" class="btn btn-dark  btn-sm mt-2" title="Update">Update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock content %}
